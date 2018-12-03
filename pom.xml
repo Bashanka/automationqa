@@ -8,6 +8,7 @@
     <artifactId>automationqa</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
     <dependencies>
         <dependency>
             <groupId>org.testng</groupId>
@@ -17,5 +18,17 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
