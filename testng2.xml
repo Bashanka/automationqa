@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite2" verbose="1">
+    <test name="test1">
+        <parameter name="i" value="1" />
+        <parameter name="j" value="1" />
+        <groups>
+            <run>
+                <include name="testGroup" />
+            </run>
+        </groups>
+    </test>
+    <test name="test2">
+        <classes>
+            <class name="com.sperasoft.TestClass2" />
+        </classes>
+    </test>
+</suite>
