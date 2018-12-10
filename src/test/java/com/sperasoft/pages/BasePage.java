@@ -6,10 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class BasePage {
+abstract public class BasePage {
     public WebDriver driver;
     public String BASE_URL = PropertyManager.getInstance().getURL();
-//    public static String BASE_URL = "http:\\automationpractice.com\\";
 
     //Constructor
     public BasePage(WebDriver driver){
@@ -36,10 +35,6 @@ public class BasePage {
         Select dropDown = new Select(select);
         dropDown.selectByValue(value);
     }
-
-//    public static void main(String[] args) {
-//        System.out.println(BASE_URL);
-//    }
 
 
 }

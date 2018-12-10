@@ -2,16 +2,22 @@ package com.sperasoft.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BasePage {
 
-    private String singInLink = "login";
-    private String emailInput = "email_create";
-    private String emailSubmit = "SubmitCreate";
+    @FindBy(className = "login")
+    private WebElement singInLink;
+    @FindBy(id = "email_create")
+    private WebElement emailInput;
+    @FindBy(id = "SubmitCreate")
+    private WebElement emailSubmit;
 
     public HomePage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     public void open() {
@@ -19,9 +25,9 @@ public class HomePage extends BasePage {
     }
 
     public void goToRegisterWithEmail(String email) {
-        click(By.className(singInLink));
-        writeText(By.id(emailInput), email);
-        click(By.id(emailSubmit));
+        singInLink.click();
+        emailInput.sendKeys(email);
+        emailSubmit.submit();
     }
 
 }

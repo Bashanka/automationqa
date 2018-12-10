@@ -1,71 +1,90 @@
 package com.sperasoft.pages;
 
-import com.sperasoft.Models.PersonData;
-import org.openqa.selenium.By;
+import com.sperasoft.models.PersonData;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Select;
 
 public class RegisterPage extends BasePage{
 
     public RegisterPage(WebDriver driver) {
         super(driver);
+        PageFactory.initElements(driver, this);
     }
 
     public void waitUntilPageLoaded() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(
-                ExpectedConditions.presenceOfElementLocated(submitAccount)
+                ExpectedConditions.visibilityOf(submitAccount)
         );
     }
 
-    private By radioBtnMrPI = By.id("id_gender1");
-    private By radioBtnMrsPI = By.id("id_gender2");
-    private By firstnamePI = By.id("customer_firstname");
-    private By lastnamePI = By.id("customer_lastname");
-    private By emailPI = By.id("email");
-    private By passwdPI = By.id("passwd");
-    private By firstNameYA = By.id("firstname");
-    private By lastnameYA = By.id("lastname");
-    private By address1YA = By.id("address1");
-    private By cityYA = By.id("city");
-    private By stateYA = By.id("id_state");
-    private By postcodeYA = By.id("postcode");
-    private By phone_mobileYA = By.id("phone_mobile");
-    private By aliasYA = By.id("alias");
-    private By submitAccount = By.id("submitAccount");
-    private By customer_name = By.cssSelector("div.header_user_info a.account span");
+    @FindBy(id = "id_gender1")
+    private WebElement radioBtnMrPI;
+    @FindBy(id = "id_gender2")
+    private WebElement radioBtnMrsPI;
+    @FindBy(id = "customer_firstname")
+    private WebElement firstnamePI;
+    @FindBy(id = "customer_lastname")
+    private WebElement lastnamePI;
+    @FindBy(id = "email")
+    private WebElement emailPI;
+    @FindBy(id = "passwd")
+    private WebElement passwdPI;
+    @FindBy(id = "firstname")
+    private WebElement firstNameYA;
+    @FindBy(id = "lastname")
+    private WebElement lastnameYA;
+    @FindBy(id = "address1")
+    private WebElement address1YA;
+    @FindBy(id = "city")
+    private WebElement cityYA;
+    @FindBy(id = "id_state")
+    private WebElement stateYA;
+    @FindBy(id = "postcode")
+    private WebElement postcodeYA;
+    @FindBy(id = "phone_mobile")
+    private WebElement phone_mobileYA;
+    @FindBy(id = "alias")
+    private WebElement aliasYA;
+    @FindBy(id = "submitAccount")
+    private WebElement submitAccount;
+    @FindBy(css = "div.header_user_info a.account span")
+    private WebElement customer_name;
 
-    private PersonData personData;
 
 
     public void fillRegistrationFormWithData(PersonData personData) {
-        this.personData = personData;
-        if (personData.getGenre() == PersonData.Genre.MALE) click(radioBtnMrPI);
-        else click(radioBtnMrsPI);
-        writeText(firstnamePI, personData.getFirstname());
-        writeText(lastnamePI, personData.getLastname());
+        if (personData.getGender() == PersonData.Gender.MALE) radioBtnMrPI.click();
+        else radioBtnMrsPI.click();
+        firstnamePI.sendKeys(personData.getFirstname());
+        lastnamePI.sendKeys(personData.getLastname());
         // auto filled
 //        writeText(emailPI, personData.getEmail());
-        writeText(passwdPI, personData.getPasswd());
-        writeText(firstNameYA, personData.getFirstname());
-        writeText(lastnameYA, personData.getLastname());
-        writeText(address1YA, personData.getAddress());
-        writeText(cityYA, personData.getCity());
-        select(stateYA, personData.getState());
-        writeText(postcodeYA, personData.getPostcode());
-        writeText(phone_mobileYA, personData.getMobilephone());
-        writeText(aliasYA, personData.getPostcode());
-        click(submitAccount);
+        passwdPI.sendKeys(personData.getPasswd());
+        firstNameYA.sendKeys(personData.getFirstname());
+        lastnameYA.sendKeys(personData.getLastname());
+        address1YA.sendKeys(personData.getAddress());
+        cityYA.sendKeys(personData.getCity());
+        (new Select(stateYA)).selectByValue(personData.getState());
+        postcodeYA.sendKeys(personData.getPostcode());
+        phone_mobileYA.sendKeys(personData.getMobilephone());
+        // auto filled
+//        aliasYA.sendKeys(personData.getPostcode());
+        submitAccount.click();
     }
 
 
-    public boolean verifyRegistration() {
+    public boolean verifyRegistration(PersonData personData) {
         WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(
-                ExpectedConditions.presenceOfElementLocated(customer_name)
+        WebElement until = wait.until(
+                ExpectedConditions.visibilityOf(customer_name)
         );
-        return readText(customer_name).equals(personData.getFirstname() + " " + personData.getLastname());
+        return customer_name.getText().equals(personData.getFirstname() + " " + personData.getLastname());
     }
 
 }

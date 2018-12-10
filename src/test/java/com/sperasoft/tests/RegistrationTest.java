@@ -1,21 +1,24 @@
 package com.sperasoft.tests;
 
-import com.sperasoft.Models.PersonData;
+import com.sperasoft.models.PersonData;
 import com.sperasoft.pages.HomePage;
 import com.sperasoft.pages.RegisterPage;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
 public class RegistrationTest extends BaseTest {
 
+    private static final Logger LOGGER = LogManager.getLogger( RegistrationTest.class.getName() );
+
     @DataProvider( name = "verifyRegistrationWithCorrectData" )
     public static Object[] verifyRegistrationWithCorrectData() {
         return new PersonData[] {
-                new PersonData(PersonData.Genre.MALE, createLetterString(), createLetterString(),
+                new PersonData(PersonData.Gender.MALE, createLetterString(), createLetterString(),
                         createNumberLetterString() + "@gmail.com", createNumberLetterString(), createLetterString(),
                         createLetterString(), createState(), createNumberString(5), createNumberString(11),
                         createLetterString())
@@ -23,16 +26,22 @@ public class RegistrationTest extends BaseTest {
     }
 
     @Test( dataProvider = "verifyRegistrationWithCorrectData" )
-    public void test1(PersonData personData) {
+    public void RegistrationTestWithPersonData(PersonData personData) {
 
         HomePage homePage = new HomePage(driver);
+        LOGGER.info("HomePage init");
         homePage.open();
+        LOGGER.info("HomePage open");
         homePage.goToRegisterWithEmail(personData.getEmail());
+        LOGGER.info("HomePage goToRegisterWithEmail");
         RegisterPage registerPage = new RegisterPage(driver);
+        LOGGER.info("RegisterPage init");
         registerPage.waitUntilPageLoaded();
+        LOGGER.info("RegisterPage waitUntilPageLoaded");
         registerPage.fillRegistrationFormWithData(personData);
-        Assert.assertTrue(registerPage.verifyRegistration());
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        LOGGER.info("RegisterPage fillRegistrationFormWithData");
+        Assert.assertTrue(registerPage.verifyRegistration(personData));
+        LOGGER.info("RegisterPage success verifyRegistration");
     }
 
     private static String createLetterString() {
