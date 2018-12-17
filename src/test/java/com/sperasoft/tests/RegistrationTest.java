@@ -1,6 +1,6 @@
 package com.sperasoft.tests;
 
-import com.sperasoft.models.PersonData;
+import com.sperasoft.models.Account;
 import com.sperasoft.pages.HomePage;
 import com.sperasoft.pages.RegisterPage;
 import org.testng.Assert;
@@ -9,80 +9,46 @@ import org.testng.annotations.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Random;
 
 public class RegistrationTest extends BaseTest {
 
     private static final Logger LOGGER = LogManager.getLogger( RegistrationTest.class.getName() );
 
     @DataProvider( name = "verifyRegistrationWithCorrectData" )
-    public static Object[] verifyRegistrationWithCorrectData() {
-        return new PersonData[] {
-                new PersonData(PersonData.Gender.MALE, createLetterString(), createLetterString(),
-                        createNumberLetterString() + "@gmail.com", createNumberLetterString(), createLetterString(),
-                        createLetterString(), createState(), createNumberString(5), createNumberString(11),
-                        createLetterString())
-        };
+    private Object[][] verifyRegistrationWithCorrectData() {
+        return dataPool.getData();
     }
 
     @Test( dataProvider = "verifyRegistrationWithCorrectData" )
-    public void RegistrationTestWithPersonData(PersonData personData) {
-
-        HomePage homePage = new HomePage(driver);
+    public void RegistrationTestWithPersonData(Account account) {
         LOGGER.info("HomePage init");
-        homePage.open();
+        HomePage homePage = new HomePage(driver);
         LOGGER.info("HomePage open");
-        homePage.goToRegisterWithEmail(personData.getEmail());
+        homePage.open();
+        LOGGER.info("HomePage singIn");
+        homePage.singIn();
         LOGGER.info("HomePage goToRegisterWithEmail");
-        RegisterPage registerPage = new RegisterPage(driver);
+        homePage.goToRegisterWithEmail(account.getEmail());
         LOGGER.info("RegisterPage init");
-        registerPage.waitUntilPageLoaded();
-        LOGGER.info("RegisterPage waitUntilPageLoaded");
-        registerPage.fillRegistrationFormWithData(personData);
-        LOGGER.info("RegisterPage fillRegistrationFormWithData");
-        Assert.assertTrue(registerPage.verifyRegistration(personData));
-        LOGGER.info("RegisterPage success verifyRegistration");
-    }
-
-    private static String createLetterString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 15) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
+        RegisterPage registerPage = new RegisterPage(driver);
+        LOGGER.info("RegisterPage fillRegistrationForm");
+        registerPage.fillRegistrationForm(account);
+        LOGGER.info("RegisterPage sendRegistrationForm");
+        registerPage.sendRegistrationForm();
+        LOGGER.info("RegisterPage verifyRegistration");
+        Assert.assertTrue(registerPage.verifyRegistration(account));
+        if (parameters.get("logout").equals("true")) {
+            LOGGER.info("RegisterPage signOut");
+            registerPage.signOut();
         }
-        String saltStr = salt.toString();
-        return saltStr;
-
     }
 
-    private static String createNumberLetterString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 15) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
+    @Test( dataProvider = "verifyRegistrationWithCorrectData" )
+    public void testGetAccountFromDataFile( Account account ) {
+
+        System.out.println( account );
     }
 
-    private static String createNumberString(int n) {
-        String SALTCHARS = "1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < n) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
-    }
 
-    private static String createState() {
-        return Integer.toString((new Random()).nextInt(50) + 1);
-    }
 
 }

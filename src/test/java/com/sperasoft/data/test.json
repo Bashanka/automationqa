@@ -1,0 +1,37 @@
+[
+  {
+    "gender": "MALE",
+    "firstname": "John",
+    "lastname": "Smith",
+    "email": "sdjk@ks.jh",
+    "passwd": "sdjhk456jh",
+    "dateOfBirth": "10/12/1990",
+    "address": "fgdfgd",
+    "address2": "fgfgf",
+    "city": "bfd",
+    "state": "33",
+    "additionalInformation": "dfkh dfkhd kdh fk",
+    "postcode": "15234",
+    "homephone": "55555",
+    "mobilephone": "546654654",
+    "alias": "ffkdj"
+  },
+  {
+    "gender": "MALE",
+    "firstname": "John",
+    "lastname": "Smith",
+    "email": "sdjdfk@ks.jh",
+    "passwd": "sdjhk456jh",
+    "dateOfBirth": "10/12/1990",
+    "address": "fgdfgd",
+    "address2": "fgfgf",
+    "city": "bfd",
+    "state": "33",
+    "additionalInformation": "dfkh dfkhd kdh fk",
+    "postcode": "15234",
+    "homephone": "55555",
+    "mobilephone": "546654654",
+    "alias": "ffkdj"
+  }
+
+]

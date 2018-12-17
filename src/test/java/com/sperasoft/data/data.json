@@ -1,0 +1,44 @@
+[
+  {
+    "gender": "MALE",
+    "firstname": "John",
+    "lastname": "Smith",
+    "email": "s57k@ksk.j",
+    "passwd": "sdjhk456jh",
+    "dateOfBirth": "10/12/1990",
+    "addresses": [
+      {
+        "address1": "kfjghlh",
+        "address2": "fljkglk",
+        "city": "fdkjg",
+        "state": "45",
+        "postcode": "45612",
+        "homephone": "54621",
+        "addInfo": "fg;ld",
+        "title": "fg;dr"
+      }
+    ],
+    "mobilephone": "546654654"
+  },
+  {
+    "gender": "MALE",
+    "firstname": "John",
+    "lastname": "Smith",
+    "email": "sd8wk@2ks04k.jh",
+    "passwd": "sdjhk456jh",
+    "dateOfBirth": "10/12/1990",
+    "addresses": [
+      {
+        "address1": "kfjghlh",
+        "address2": "fljkglk",
+        "city": "fdkjg",
+        "state": "45",
+        "postcode": "45612",
+        "homephone": "54621",
+        "addInfo": "fg;ld",
+        "title": "fg;dr"
+      }
+    ],
+    "mobilephone": "546654654"
+  }
+]
