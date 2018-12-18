@@ -47,12 +47,16 @@ public class HomePage extends BasePage {
         emailSubmitCreate.submit();
     }
 
+    @FindBy(className = "form-error")
+    private WebElement formError;
+    public boolean goToRegisterWithEmailError() {
+        return formError.isDisplayed();
+    }
+
     public void goToPersonalAccount(String email, String passwd) {
         emailInputLogIn.sendKeys(email);
         passwdInputLogIn.sendKeys(passwd);
         SubmitLogIn.click();
     }
-
-
 
 }

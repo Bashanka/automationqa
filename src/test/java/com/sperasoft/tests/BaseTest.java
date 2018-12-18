@@ -27,7 +27,9 @@ public class BaseTest {
 
     @BeforeTest
     public void beforeTest() {
-        System.setProperty("webdriver.chrome.driver", "D:\\WebDrivers\\chromedriver.exe");
+        String webdriverFilePath = System.getProperty("user.dir")+
+                "\\src\\main\\resources\\chromedriver.exe";
+        System.setProperty("webdriver.chrome.driver", webdriverFilePath);
         driver = new ChromeDriver();
     }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Simple test suite">
+
+
+    <test name="Some Test" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <parameter name="logout" value="true"/>
+        <classes>
+            <class name="com.sperasoft.tests.PageElementTest">
+                <methods>
+                    <include name="RegistrationPageElementsTest" />
+
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

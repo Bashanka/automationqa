@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.asserts.SoftAssert;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -117,6 +118,16 @@ public class RegisterPage extends BasePage{
         NavBar navBar = PageFactory.initElements(driver, NavBar.class);
         return navBar.getCustomerName().equals(account.getFirstname() + " " + account.getLastname());
     }
+
+    @FindBy(className = "alert-danger")
+    private WebElement alertDanger;
+
+    public boolean verifyRegistrationError() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(alertDanger));
+        return alertDanger.isDisplayed();
+    }
+
     @FindBy(className = "nav")
     private WebElement nav;
     public void signOut() {
@@ -125,4 +136,56 @@ public class RegisterPage extends BasePage{
         PageFactory.initElements(driver, NavBar.class).singOut();
     }
 
+    public SoftAssert verifyPageElements() {
+        SoftAssert softAssert = new SoftAssert();
+
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+//        wait.until(ExpectedConditions.visibilityOf(radioBtnMrPI));
+//        wait.until(ExpectedConditions.visibilityOf(radioBtnMrsPI));
+//        wait.until(ExpectedConditions.visibilityOf(firstnamePI));
+//        wait.until(ExpectedConditions.visibilityOf(lastnamePI));
+//        wait.until(ExpectedConditions.visibilityOf(emailPI));
+//        wait.until(ExpectedConditions.visibilityOf(passwdPI));
+//        wait.until(ExpectedConditions.visibilityOf(bDayDaysPI));
+//        wait.until(ExpectedConditions.visibilityOf(bDayMonthsPI));
+//        wait.until(ExpectedConditions.visibilityOf(bDayYearsPI));
+//        wait.until(ExpectedConditions.visibilityOf(newsletterPI));
+//        wait.until(ExpectedConditions.visibilityOf(optinPI));
+//        wait.until(ExpectedConditions.visibilityOf(firstNameYA));
+//        wait.until(ExpectedConditions.visibilityOf(lastnameYA));
+//        wait.until(ExpectedConditions.visibilityOf(cityYA));
+//        wait.until(ExpectedConditions.visibilityOf(postcodeYA));
+//        wait.until(ExpectedConditions.visibilityOf(stateYA));
+//        wait.until(ExpectedConditions.visibilityOf(otherYA));
+//        wait.until(ExpectedConditions.visibilityOf(phoneYA));
+//        wait.until(ExpectedConditions.visibilityOf(phone_mobileYA));
+//        wait.until(ExpectedConditions.visibilityOf(aliasYA));
+        wait.until(ExpectedConditions.visibilityOf(submitAccount));
+
+        softAssert.assertTrue(radioBtnMrPI.isDisplayed(), "radioBtnMrPI");
+        softAssert.assertTrue(radioBtnMrsPI.isDisplayed(), "radioBtnMrsPI");
+        softAssert.assertTrue(firstnamePI.isDisplayed(), "firstnamePI");
+        softAssert.assertTrue(lastnamePI.isDisplayed(), "lastnamePI");
+        softAssert.assertTrue(emailPI.isDisplayed(), "emailPI");
+        softAssert.assertTrue(passwdPI.isDisplayed(), "passwdPI");
+        softAssert.assertTrue(bDayDaysPI.isDisplayed(), "bDayDaysPI");
+        softAssert.assertTrue(bDayMonthsPI.isDisplayed(), "bDayMonthsPI");
+        softAssert.assertTrue(bDayYearsPI.isDisplayed(), "bDayYearsPI");
+        softAssert.assertTrue(newsletterPI.isDisplayed(), "newsletterPI");
+        softAssert.assertTrue(optinPI.isDisplayed(), "optinPI");
+        softAssert.assertTrue(firstNameYA.isDisplayed(), "firstNameYA");
+        softAssert.assertTrue(lastnameYA.isDisplayed(), "lastnameYA");
+        softAssert.assertTrue(address1YA.isDisplayed(), "address1YA");
+        softAssert.assertTrue(address2YA.isDisplayed(), "address2YA");
+        softAssert.assertTrue(cityYA.isDisplayed(), "cityYA");
+        softAssert.assertTrue(postcodeYA.isDisplayed(), "postcodeYA");
+        softAssert.assertTrue(stateYA.isDisplayed(), "stateYA");
+        softAssert.assertTrue(otherYA.isDisplayed(), "otherYA");
+        softAssert.assertTrue(phoneYA.isDisplayed(), "phoneYA");
+        softAssert.assertTrue(phone_mobileYA.isDisplayed(), "phone_mobileYA");
+        softAssert.assertTrue(aliasYA.isDisplayed(), "aliasYA");
+        softAssert.assertTrue(submitAccount.isDisplayed(), "submitAccount");
+
+        return softAssert;
+    }
 }

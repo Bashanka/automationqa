@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Simple test suite">
+
+
+    <test name="Test Not Correct First Name" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <classes>
+            <class name="com.sperasoft.tests.NegRegistrationTest">
+                <methods>
+                    <include name="RegistrationTestWithNotCorrectFirstName" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test Not Correct Last Name" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <classes>
+            <class name="com.sperasoft.tests.NegRegistrationTest">
+                <methods>
+                    <include name="RegistrationTestWithNotCorrectLastName" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test Not Correct Email" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <classes>
+            <class name="com.sperasoft.tests.NegRegistrationTest">
+                <methods>
+                    <include name="RegistrationTestWithNotCorrectEmail" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test Not Correct Postcode" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <classes>
+            <class name="com.sperasoft.tests.NegRegistrationTest">
+                <methods>
+                    <include name="RegistrationTestWithNotCorrectPostcode" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test Not Correct Home Phone" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <classes>
+            <class name="com.sperasoft.tests.NegRegistrationTest">
+                <methods>
+                    <include name="RegistrationTestWithNotCorrectHomePhone" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    <test name="Test Not Correct Mobile Phone" verbose="2">
+        <parameter name="dataFile" value="src/test/java/com/sperasoft/data/negdata.json"/>
+        <classes>
+            <class name="com.sperasoft.tests.NegRegistrationTest">
+                <methods>
+                    <include name="RegistrationTestWithNotCorrectMobilePhone" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+</suite>

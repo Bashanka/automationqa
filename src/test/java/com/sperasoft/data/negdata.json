@@ -1,0 +1,24 @@
+[
+  {
+    "gender": "MALE",
+    "firstname": "John",
+    "lastname": "Smith",
+    "email": "JohnSmith12345@gmail.com",
+    "passwd": "sdjhk456jh",
+    "dateOfBirth": "10/12/1990",
+    "addresses": [
+      {
+        "address1": "Some Address",
+        "address2": "Some Address Line 2",
+        "city": "City",
+        "state": "45",
+        "postcode": "45612",
+        "homephone": "54621",
+        "addInfo": "Some Additional information",
+        "title": "My Address"
+      }
+    ],
+    "mobilephone": "546654654"
+  }
+
+]
