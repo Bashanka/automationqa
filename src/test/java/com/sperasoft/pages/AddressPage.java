@@ -45,7 +45,7 @@ public class AddressPage extends BasePage {
     }
 
     public boolean verifyAddress(Account account) {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(firstname));
         return account.getFirstname().equals(firstname.getAttribute("value")) &&
                 account.getLastname().equals(lastname.getAttribute("value")) &&
@@ -61,7 +61,7 @@ public class AddressPage extends BasePage {
     }
 
     public void changeAddressHomePhone(String phonenumber) {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(firstname));
         phone.clear();
         phone.sendKeys(phonenumber);

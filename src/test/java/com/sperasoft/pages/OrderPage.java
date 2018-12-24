@@ -1,12 +1,16 @@
 package com.sperasoft.pages;
 
+import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 public class OrderPage extends BasePage {
 
@@ -28,6 +32,8 @@ public class OrderPage extends BasePage {
     private WebElement backToOrdersLink;
     @FindBy(id = "order-list")
     private WebElement orderList;
+    @FindBy(css = "td.history_invoice a")
+    private WebElement downLoadPdfLink;
 
     public OrderPage(WebDriver driver) {
         super(driver);
@@ -39,29 +45,24 @@ public class OrderPage extends BasePage {
     }
 
     public void order() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(proceedToCheckout));
         proceedToCheckout.click();
 
-        wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(proceedToCheckout1));
         proceedToCheckout1.click();
 
-        wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(proceedToCheckout2));
         proceedToCheckout2.click();
 
         checkbox.click();
 
-        wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(proceedToCheckout3));
         proceedToCheckout3.click();
 
-        wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(payment));
         payment.click();
 
-        wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(proceedToCheckout2));
         proceedToCheckout2.click();
     }
@@ -71,6 +72,32 @@ public class OrderPage extends BasePage {
     }
 
     public boolean verifyOrder() {
-        return orderList.isDisplayed();
+        if (!orderList.isDisplayed()) return false;
+        driver.get(downLoadPdfLink.getAttribute("href"));
+        waitForFileDownload(driver);
+        return isFileDownloaded();
+    }
+
+    private boolean isFileDownloaded() {
+        boolean flag = false;
+        File dir = new File(DOWNLOADDIR);
+        File[] dir_contents = dir.listFiles();
+
+        for (int i = 0; i < dir_contents.length; i++) {
+            if (dir_contents[i].getName().contains(".pdf"))
+                return flag=true;
+        }
+
+        return flag;
+    }
+
+    private void waitForFileDownload(WebDriver driver){
+        int totalTimeoutInMillis = TIMEOUT*1000;
+
+        FluentWait<WebDriver> wait = new FluentWait(driver)
+                .withTimeout(totalTimeoutInMillis, TimeUnit.MILLISECONDS)
+                .pollingEvery(200, TimeUnit.MILLISECONDS);
+
+        wait.until((WebDriver wd) -> isFileDownloaded());
     }
 }

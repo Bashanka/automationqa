@@ -4,10 +4,14 @@ import com.sperasoft.models.Account;
 import com.sperasoft.pages.HomePage;
 import com.sperasoft.pages.OrderPage;
 import com.sun.org.apache.xpath.internal.operations.Or;
+import io.qameta.allure.Description;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.io.File;
 
 public class OrderTest extends BaseTest {
 
@@ -18,8 +22,9 @@ public class OrderTest extends BaseTest {
         return dataPool.getData();
     }
 
-    @Test(dataProvider = "activeAccount")
-    public void test(Account account) {
+    @Test( dataProvider = "activeAccount", description = "Test order" )
+    @Description( "Test order" )
+    public void testOrder(Account account) {
         HomePage homePage = new HomePage(driver);
 
         homePage.open();
@@ -37,8 +42,7 @@ public class OrderTest extends BaseTest {
         LOGGER.info("Go to orders");
         orderPage.goToOrders();
         LOGGER.info("Proof it");
-        orderPage.verifyOrder();
-
+        Assert.assertTrue(orderPage.verifyOrder());
         homePage.signOut();
 
     }

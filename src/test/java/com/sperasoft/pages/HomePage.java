@@ -29,13 +29,13 @@ public class HomePage extends BasePage {
 
 
     public void singIn() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(nav));
         PageFactory.initElements(driver, NavBar.class).singIn();
     }
 
     public void signOut() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(nav));
         PageFactory.initElements(driver, NavBar.class).singOut();
     }

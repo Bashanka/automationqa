@@ -2,6 +2,7 @@ package com.sperasoft.pages;
 
 import com.sperasoft.models.Account;
 import com.sperasoft.models.Address;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,10 +12,32 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.List;
 
 public class RegisterPage extends BasePage{
+
+
+    public static ArrayList<String> errors = new ArrayList<>();
+
+    static {
+        errors.add("You must register at least one phone number.");
+        errors.add("phone is invalid.");
+        errors.add("phone_mobile is invalid.");
+        errors.add("lastname is required.");
+        errors.add("lastname is invalid.");
+        errors.add("firstname is required.");
+        errors.add("firstname is invalid.");
+        errors.add("email is invalid.");
+        errors.add("email is required.");
+        errors.add("passwd is required.");
+        errors.add("address1 is required.");
+        errors.add("city is required.");
+        errors.add("The Zip/Postal code you've entered is invalid. It must follow this format: 00000");
+        errors.add("This country requires you to choose a State.");
+    }
 
     public RegisterPage(WebDriver driver) {
         super(driver);
@@ -71,7 +94,7 @@ public class RegisterPage extends BasePage{
 
 
     public void fillRegistrationForm(Account account) {
-        (new WebDriverWait(driver, 30)).until(
+        (new WebDriverWait(driver, TIMEOUT)).until(
                 ExpectedConditions.visibilityOf(submitAccount)
         );
 
@@ -80,13 +103,10 @@ public class RegisterPage extends BasePage{
         else radioBtnMrsPI.click();
         firstnamePI.sendKeys(account.getFirstname());
         lastnamePI.sendKeys(account.getLastname());
-        // auto filled
-//        writeText(emailPI, account.getEmail());
         passwdPI.sendKeys(account.getPasswd());
 
         Calendar cal = Calendar.getInstance();
         cal.setTime(account.getDateOfBirth());
-
 
         (new Select(bDayDaysPI)).selectByValue(Integer.toString(cal.get(Calendar.DAY_OF_MONTH)));
         (new Select(bDayMonthsPI)).selectByValue(Integer.toString(cal.get(Calendar.MONTH) + 1));
@@ -122,70 +142,74 @@ public class RegisterPage extends BasePage{
     @FindBy(className = "alert-danger")
     private WebElement alertDanger;
 
-    public boolean verifyRegistrationError() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+    public boolean verifyRegistrationError(ArrayList<String> expectedErrors) {
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(alertDanger));
-        return alertDanger.isDisplayed();
+        if (!alertDanger.isDisplayed()) return false;
+        List<WebElement> errs = driver.findElements(By.cssSelector(".alert-danger li"));
+        ArrayList<String> actualErrors = new ArrayList<>();
+        for (WebElement err : errs) {
+            actualErrors.add(err.getText());
+        }
+
+        return compareArrays(expectedErrors, actualErrors);
     }
 
     @FindBy(className = "nav")
     private WebElement nav;
     public void signOut() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(nav));
         PageFactory.initElements(driver, NavBar.class).singOut();
     }
 
     public SoftAssert verifyPageElements() {
         SoftAssert softAssert = new SoftAssert();
+        waitForPageLoaded(driver);
 
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-//        wait.until(ExpectedConditions.visibilityOf(radioBtnMrPI));
-//        wait.until(ExpectedConditions.visibilityOf(radioBtnMrsPI));
-//        wait.until(ExpectedConditions.visibilityOf(firstnamePI));
-//        wait.until(ExpectedConditions.visibilityOf(lastnamePI));
-//        wait.until(ExpectedConditions.visibilityOf(emailPI));
-//        wait.until(ExpectedConditions.visibilityOf(passwdPI));
-//        wait.until(ExpectedConditions.visibilityOf(bDayDaysPI));
-//        wait.until(ExpectedConditions.visibilityOf(bDayMonthsPI));
-//        wait.until(ExpectedConditions.visibilityOf(bDayYearsPI));
-//        wait.until(ExpectedConditions.visibilityOf(newsletterPI));
-//        wait.until(ExpectedConditions.visibilityOf(optinPI));
-//        wait.until(ExpectedConditions.visibilityOf(firstNameYA));
-//        wait.until(ExpectedConditions.visibilityOf(lastnameYA));
-//        wait.until(ExpectedConditions.visibilityOf(cityYA));
-//        wait.until(ExpectedConditions.visibilityOf(postcodeYA));
-//        wait.until(ExpectedConditions.visibilityOf(stateYA));
-//        wait.until(ExpectedConditions.visibilityOf(otherYA));
-//        wait.until(ExpectedConditions.visibilityOf(phoneYA));
-//        wait.until(ExpectedConditions.visibilityOf(phone_mobileYA));
-//        wait.until(ExpectedConditions.visibilityOf(aliasYA));
-        wait.until(ExpectedConditions.visibilityOf(submitAccount));
-
-        softAssert.assertTrue(radioBtnMrPI.isDisplayed(), "radioBtnMrPI");
-        softAssert.assertTrue(radioBtnMrsPI.isDisplayed(), "radioBtnMrsPI");
-        softAssert.assertTrue(firstnamePI.isDisplayed(), "firstnamePI");
-        softAssert.assertTrue(lastnamePI.isDisplayed(), "lastnamePI");
-        softAssert.assertTrue(emailPI.isDisplayed(), "emailPI");
-        softAssert.assertTrue(passwdPI.isDisplayed(), "passwdPI");
-        softAssert.assertTrue(bDayDaysPI.isDisplayed(), "bDayDaysPI");
-        softAssert.assertTrue(bDayMonthsPI.isDisplayed(), "bDayMonthsPI");
-        softAssert.assertTrue(bDayYearsPI.isDisplayed(), "bDayYearsPI");
-        softAssert.assertTrue(newsletterPI.isDisplayed(), "newsletterPI");
-        softAssert.assertTrue(optinPI.isDisplayed(), "optinPI");
-        softAssert.assertTrue(firstNameYA.isDisplayed(), "firstNameYA");
-        softAssert.assertTrue(lastnameYA.isDisplayed(), "lastnameYA");
-        softAssert.assertTrue(address1YA.isDisplayed(), "address1YA");
-        softAssert.assertTrue(address2YA.isDisplayed(), "address2YA");
-        softAssert.assertTrue(cityYA.isDisplayed(), "cityYA");
-        softAssert.assertTrue(postcodeYA.isDisplayed(), "postcodeYA");
-        softAssert.assertTrue(stateYA.isDisplayed(), "stateYA");
-        softAssert.assertTrue(otherYA.isDisplayed(), "otherYA");
-        softAssert.assertTrue(phoneYA.isDisplayed(), "phoneYA");
-        softAssert.assertTrue(phone_mobileYA.isDisplayed(), "phone_mobileYA");
-        softAssert.assertTrue(aliasYA.isDisplayed(), "aliasYA");
-        softAssert.assertTrue(submitAccount.isDisplayed(), "submitAccount");
+        softAssert.assertTrue(radioBtnMrPI.isEnabled(), "Radiobutton Mr is not displayed");
+        softAssert.assertTrue(radioBtnMrsPI.isEnabled(), "Radiobutton Mrs is not displayed");
+        softAssert.assertTrue(firstnamePI.isDisplayed(), "Input First Name is not displayed");
+        softAssert.assertTrue(lastnamePI.isDisplayed(), "Input Last Name is not displayed");
+        softAssert.assertTrue(emailPI.isDisplayed(), "Input Email is not displayed");
+        softAssert.assertTrue(passwdPI.isDisplayed(), "Input Password is not displayed");
+        softAssert.assertTrue(bDayDaysPI.isEnabled(), "Select Day of Birth is not displayed");
+        softAssert.assertTrue(bDayMonthsPI.isEnabled(), "Select Month of Birth is not displayed");
+        softAssert.assertTrue(bDayYearsPI.isEnabled(), "Select Year of Birth is not displayed");
+        softAssert.assertTrue(newsletterPI.isEnabled(), "Checkbox News Letter is not displayed");
+        softAssert.assertTrue(optinPI.isEnabled(), "Checkbox Receive special offers is not displayed");
+        softAssert.assertTrue(firstNameYA.isDisplayed(), "Input First Name is not displayed (Address)");
+        softAssert.assertTrue(lastnameYA.isDisplayed(), "Input Last Name is not displayed (Address)");
+        softAssert.assertTrue(address1YA.isDisplayed(), "Input Address is not displayed (Address)");
+        softAssert.assertTrue(address2YA.isDisplayed(), "Input Address (Line 2) is not displayed (Address)");
+        softAssert.assertTrue(cityYA.isDisplayed(), "Input City is not displayed (Address)");
+        softAssert.assertTrue(postcodeYA.isDisplayed(), "Input Postcode is not displayed (Address)");
+        softAssert.assertTrue(stateYA.isEnabled(), "Select State is not displayed (Address)");
+        softAssert.assertTrue(otherYA.isDisplayed(), "Textarea Additional Information is not displayed (Address)");
+        softAssert.assertTrue(phoneYA.isDisplayed(), "Input Home Phone is not displayed (Address)");
+        softAssert.assertTrue(phone_mobileYA.isDisplayed(), "Input Mobile Phone is not displayed (Address)");
+        softAssert.assertTrue(aliasYA.isDisplayed(), "Input Assign an Address Alias is not displayed (Address)");
+        softAssert.assertTrue(submitAccount.isDisplayed(), "Submit button is not displayed");
 
         return softAssert;
     }
+
+
+
+    public static boolean compareArrays(ArrayList<String> arr1, ArrayList<String> arr2) {
+        if (arr1.size() != arr2.size()) return false;
+        for (int i = 0; i < arr1.size(); i++) {
+            boolean flag = false;
+            for (int j = 0; j < arr2.size(); j++) {
+                System.out.println(arr1.get(i) + " | " + arr2.get(j));
+                if (arr1.get(i).equals(arr2.get(j))) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) return flag;
+        }
+        return true;
+    }
+
 }

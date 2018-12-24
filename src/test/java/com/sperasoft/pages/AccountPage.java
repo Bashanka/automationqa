@@ -24,12 +24,11 @@ public class AccountPage extends BasePage{
     }
 
     public void goToAddresses() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(
                 ExpectedConditions.visibilityOf(addresses)
         );
         addresses.click();
-        wait = new WebDriverWait(driver, 30);
         wait.until(
                 ExpectedConditions.visibilityOf(addressesUpdateLink)
         );
@@ -38,16 +37,11 @@ public class AccountPage extends BasePage{
     }
 
     public void goToPersonalInfo() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(
                 ExpectedConditions.visibilityOf(info)
         );
         info.click();
     }
-
-//    public void test() {
-//        addressesUpdateLink.click();
-////        firstname.clear();
-//    }
 
 }

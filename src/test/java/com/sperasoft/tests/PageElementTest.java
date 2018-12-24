@@ -3,6 +3,7 @@ package com.sperasoft.tests;
 import com.sperasoft.models.Account;
 import com.sperasoft.pages.HomePage;
 import com.sperasoft.pages.RegisterPage;
+import io.qameta.allure.Description;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.annotations.DataProvider;
@@ -19,7 +20,8 @@ public class PageElementTest extends BaseTest {
         return dataPool.getData();
     }
 
-    @Test(dataProvider = "verifyRegistrationWithCorrectData")
+    @Test( dataProvider = "verifyRegistrationWithCorrectData", description = "Test elements on registration form" )
+    @Description( "Test elements on registration form" )
     public void RegistrationPageElementsTest(Account account) {
         LOGGER.debug("HomePage init");
         HomePage homePage = new HomePage(driver);

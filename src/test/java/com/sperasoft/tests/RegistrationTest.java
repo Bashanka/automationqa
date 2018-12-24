@@ -3,6 +3,7 @@ package com.sperasoft.tests;
 import com.sperasoft.models.Account;
 import com.sperasoft.pages.HomePage;
 import com.sperasoft.pages.RegisterPage;
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -19,7 +20,8 @@ public class RegistrationTest extends BaseTest {
         return dataPool.getData();
     }
 
-    @Test( dataProvider = "verifyRegistrationWithCorrectData" )
+    @Test( dataProvider = "verifyRegistrationWithCorrectData", description = "Test registration form with correct data" )
+    @Description( "Test registration form with correct data" )
     public void RegistrationTestWithPersonData(Account account) {
         LOGGER.info("HomePage init");
         HomePage homePage = new HomePage(driver);

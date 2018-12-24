@@ -62,7 +62,7 @@ public class PersonalInfoPage extends BasePage {
     }
 
     public void signOut() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(nav));
         PageFactory.initElements(driver, NavBar.class).singOut();
     }
@@ -77,7 +77,7 @@ public class PersonalInfoPage extends BasePage {
     }
 
     public void goToAccount() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        WebDriverWait wait = new WebDriverWait(driver, TIMEOUT);
         wait.until(ExpectedConditions.visibilityOf(nav));
         PageFactory.initElements(driver, NavBar.class).goToAccount();
     }

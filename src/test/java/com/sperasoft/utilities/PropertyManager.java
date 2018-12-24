@@ -11,6 +11,8 @@ public class PropertyManager {
     private static String propertyFilePath = System.getProperty("user.dir")+
             "\\src\\main\\resources\\config.properties";
     private static String baseurl;
+    private static String downloaddir;
+    private static int timeout;
 
     //Create a Singleton instance. We need only one instance of Property Manager.
     public static PropertyManager getInstance () {
@@ -38,9 +40,18 @@ public class PropertyManager {
 
         //Get properties from configuration.properties
         baseurl = prop.getProperty("baseurl");
+        timeout = Integer.parseInt(prop.getProperty("timeout"));
+        downloaddir = prop.getProperty("downloaddir");
+
     }
 
     public String getURL () {
         return baseurl;
+    }
+    public int getTimeout () {
+        return timeout;
+    }
+    public String getDownloaddir() {
+        return downloaddir;
     }
 }

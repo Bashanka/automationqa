@@ -8,7 +8,7 @@
         <classes>
             <class name="com.sperasoft.tests.OrderTest">
                 <methods>
-                    <include name="test" />
+                    <include name="testOrder" />
 
                 </methods>
             </class>
