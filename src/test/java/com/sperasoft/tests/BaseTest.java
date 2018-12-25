@@ -5,13 +5,11 @@ import com.sperasoft.utilities.DataPool;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 
 import java.util.HashMap;
 
+@Listeners( TakeScreenshotOnFailure.class )
 public class BaseTest {
 
     public WebDriver driver;
