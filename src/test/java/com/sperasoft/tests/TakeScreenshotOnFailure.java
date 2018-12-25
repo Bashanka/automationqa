@@ -12,6 +12,7 @@ import org.testng.ITestResult;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Random;
 
 public class TakeScreenshotOnFailure implements ITestListener {
 
@@ -32,7 +33,8 @@ public class TakeScreenshotOnFailure implements ITestListener {
         {
             File f = ( (TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
             try {
-                FileUtils.copyFile( f, new File( "screenShot.jpg"  ) );
+                Random r = new Random();
+                FileUtils.copyFile( f, new File( "screenShot" + r.nextInt() + ".jpg"  ) );
                 byte[] fileContent = Files.readAllBytes( f.toPath() );
                 saveScreenshot( fileContent );
 
